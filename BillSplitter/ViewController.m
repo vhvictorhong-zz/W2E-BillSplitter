@@ -9,6 +9,9 @@
 #import "ViewController.h"
 
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *billAmountTextField;
+@property (weak, nonatomic) IBOutlet UISlider *amountBillSplitSlider;
+@property (weak, nonatomic) IBOutlet UILabel *displaySplitBillLabel;
 
 @end
 
@@ -19,11 +22,31 @@
     // Do any additional setup after loading the view, typically from a nib.
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)calculateSplitAmount:(UIButton *)sender {
+    
+    [self calculateAmount];
+    
+}
+- (IBAction)changeLabelWithSlider:(UISlider *)sender {
+    
+    [self calculateAmount];
+    
 }
 
+- (IBAction)changeLabelWithText:(UITextField *)sender {
+    
+    [self calculateAmount];
+    
+}
+
+-(void)calculateAmount {
+    
+    float splitAmount = [self.billAmountTextField.text floatValue];
+    float billSplit = self.amountBillSplitSlider.value;
+    float billWithTip = (splitAmount * 1.15) / billSplit;
+    
+    self.displaySplitBillLabel.text = [NSString stringWithFormat:@"$%0.2f", billWithTip];
+    
+}
 
 @end
